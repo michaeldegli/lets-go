@@ -1,0 +1,37 @@
+{{define "page-title"}} Add New Snippet {{end}}
+
+{{define "page-body"}}
+<form action="/snippet/new" method="POST">
+    <!-- Add a hidden input containing the CSRF token -->
+    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+    {{with .Form}}
+    <div>
+        <label for="title">Title:</label>
+        {{with .Failures.Title}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        <input type="text" name="title">
+    </div>
+    <div>
+        <label for="content">Content:</label>
+        {{with .Failures.Content}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        <textarea name="content" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div>
+        <label for="expires">Delete in:</label>
+        {{with .Failures.Expires}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        {{$expires := or .Expires "31536000"}}
+        <input type="radio" name="expires" value="31536000" {{if (eq $expires "31536000")}}checked{{end}}> One Year
+        <input type="radio" name="expires" value="86400" {{if (eq $expires "86400")}}checked{{end}}> One Day
+        <input type="radio" name="expires" value="3600" {{if (eq $expires "3600")}}checked{{end}}> One Hour
+    </div>
+    <div>
+        <input type="submit" value="Publish Snippet">
+    </div>
+    {{end}}
+</form>
+{{end}}

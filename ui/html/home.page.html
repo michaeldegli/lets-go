@@ -1,0 +1,25 @@
+{{define "page-title"}} Home {{end}}
+
+{{define "page-body"}}
+    <h2>Latest Snippets</h2>
+    {{if .Snippets}}
+    <table>
+        <tr>
+            <td>Title</td>
+            <td>Created</td>
+            <td>ID</td>
+        </tr>
+        {{range .Snippets}}
+        <tr>
+            <td>
+                <a href="/snippet/{{.ID}}">{{.Title}}</a>
+            </td>
+            <td>{{humanDate .Created}}</td>
+            <td>#{{.ID}}</td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+    <p>Nothing here yet!</p>
+    {{end}}
+{{end}}

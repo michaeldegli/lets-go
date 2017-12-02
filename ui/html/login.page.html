@@ -1,0 +1,32 @@
+{{define "page-title"}}Login{{end}}
+    {{define "page-body"}}
+        {{with .Flash}}
+            <div class="flash">{{.}}</div>
+        {{end}}
+        <form action="/user/login" method="POST" novalidate>
+        <!-- Add a hidden input containing the CSRF token -->
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        {{with .Form}}
+            {{with .Failures.Generic}}
+                <div class="error">{{.}}</div>
+            {{end}}
+        <div>
+            <label>Email:</label>
+            {{with .Failures.Email}}
+                <label class="error">{{.}}</label>
+            {{end}}
+            <input type="email" name="email" value="{{.Email}}">
+        </div>
+        <div>
+            <label>Password:</label>
+            {{with .Failures.Password}}
+                <label class="error">{{.}}</label>
+            {{end}}
+            <input type="password" name="password">
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    {{end}}
+    </form>
+{{end}}
