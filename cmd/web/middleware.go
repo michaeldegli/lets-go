@@ -62,11 +62,11 @@ func SecureHeaders(next http.Handler) http.Handler {
 func NoSurf(next http.HandlerFunc) http.Handler {
 
 	csrfHandler := nosurf.New(next)
-	csrfHandler.SetBaseCookie(http.Cookie{
-		HttpOnly: true,
-		Path:     "/",
-		Secure:   true,
-	})
+	//csrfHandler.SetBaseCookie(http.Cookie{
+	//	HttpOnly: true,
+	//	Path:     "/",
+	//	Secure:   true,
+	//})
 
 	return csrfHandler
 }

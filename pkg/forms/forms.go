@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 	"unicode/utf8"
@@ -63,7 +64,7 @@ func (f *NewSnippet) Valid() bool {
 	return len(f.Failures) == 0
 }
 
-var rxEmail = regexp.MustCompile("^[a-zA-Z\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$")
+var rxEmail = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 
 // Valid ...
 func (f *SignupUser) Valid() bool {
@@ -80,8 +81,9 @@ func (f *SignupUser) Valid() bool {
 		f.Failures["Email"] = "Email is not valid."
 	}
 
-	if utf8.RuneCountInString(f.Password) < 8 {
-		f.Failures["Password"] = "Password is too short."
+	passLen := 2
+	if utf8.RuneCountInString(f.Password) < passLen {
+		f.Failures["Password"] = fmt.Sprintf("Password is too short. Should be at least %d chars", passLen)
 	}
 
 	return len(f.Failures) == 0

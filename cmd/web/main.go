@@ -7,19 +7,19 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs"
+	"github.com/andrii-minchekov/lets-go/pkg/models"
 	_ "github.com/lib/pq"
-	"github.com/michaeldegli/snippetbox.org/pkg/models"
 )
 
 func main() {
-
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	addr := flag.String("addr", ":4000", "HTTP network address")
-	dsn := flag.String("dsn", "user=local dbname=snippetbox password=local sslmode=disable", "Postgres Datasource Name")
+	dsn := flag.String("dsn", "user=postgres dbname=snippetbox password=postgres sslmode=disable", "Postgres Datasource Name")
 	secret := flag.String("secret", "s6Nd%+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 	htmlDir := flag.String("html-dir", "./ui/html", "Path to HTML templates")
 	staticDir := flag.String("static-dir", "./ui/static", "Path to static assets")
-	tlsCert := flag.String("tls-cert", "./tls/cert.pem", "Path to TLS certificate")
-	tlsKey := flag.String("tls-key", "./tls/key.pem", "Path to TLS key")
+	//tlsCert := flag.String("tls-cert", "./tls/cert.pem", "Path to TLS certificate")
+	//tlsKey := flag.String("tls-key", "./tls/key.pem", "Path to TLS key")
 
 	flag.Parse()
 
@@ -38,8 +38,8 @@ func main() {
 		StaticDir: *staticDir,
 		Sessions:  sessionManager,
 		Addr:      *addr,
-		TLSCert:   *tlsCert,
-		TLSKey:    *tlsKey,
+		//TLSCert:   *tlsCert,
+		//TLSKey:    *tlsKey,
 	}
 
 	app.RunServer()

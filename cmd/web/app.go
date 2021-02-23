@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/alexedwards/scs"
-	"github.com/michaeldegli/snippetbox.org/pkg/models"
+	"github.com/andrii-minchekov/lets-go/pkg/models"
 )
 
 // App defines a struct to hold the application-wide dependencies and configuration

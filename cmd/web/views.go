@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/justinas/nosurf"
-	"github.com/michaeldegli/snippetbox.org/pkg/models"
+	"github.com/andrii-minchekov/lets-go/pkg/models"
 )
 
 func humanDate(t time.Time) string {

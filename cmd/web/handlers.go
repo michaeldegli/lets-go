@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/michaeldegli/snippetbox.org/pkg/forms"
-	"github.com/michaeldegli/snippetbox.org/pkg/models"
+	"github.com/andrii-minchekov/lets-go/pkg/forms"
+	"github.com/andrii-minchekov/lets-go/pkg/models"
 )
 
 // Home Display a "Hello from Snippetbox" message

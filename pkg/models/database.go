@@ -21,21 +21,23 @@ type Database struct {
 func (db *Database) InsertSnippet(title, content string) (int, error) {
 
 	stmt := `INSERT INTO snippets (title, content, created, expires) 
-	VALUES($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '50000 seconds')`
+	VALUES($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '100000 seconds') returning id`
 
-	result, err := db.Exec(stmt, title, content)
-
-	if err != nil {
-		return 0, err
-	}
-
-	id, err := result.RowsAffected()
+	result, err := db.Query(stmt, title, content)
 
 	if err != nil {
 		return 0, err
 	}
 
-	return int(id), nil
+	if err := result.Next(); !err {
+		return 0, errors.New("no id was generated")
+	}
+	var id int
+	err = result.Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
 
 }
 
