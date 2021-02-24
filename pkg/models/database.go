@@ -81,6 +81,45 @@ func (db *Database) LatestSnippets() (Snippets, error) {
 
 }
 
+// LatestSnippets ...
+func (db *Database) FindSnippets() (Snippets, error) {
+
+	stmt := `SELECT * FROM snippets ORDER BY created`
+
+	rows, err := db.Query(stmt)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// This should come after we check for an error
+	// or the rows object could be nil
+	defer rows.Close()
+
+	snippets := Snippets{}
+
+	for rows.Next() {
+
+		s := &Snippet{}
+
+		err := rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+
+		if err != nil {
+			return nil, err
+		}
+
+		snippets = append(snippets, s)
+
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return snippets, nil
+
+}
+
 // GetSnippet ...
 func (db *Database) GetSnippet(id int) (*Snippet, error) {
 

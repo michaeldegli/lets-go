@@ -17,6 +17,7 @@ func (app *App) Routes() http.Handler {
 	mux.Get("/snippet/new", app.RequireLogin(NoSurf(app.NewSnippet)))
 	mux.Post("/snippet/new", app.RequireLogin(NoSurf(app.CreateSnippet)))
 	mux.Get("/snippet/:id", NoSurf(app.ShowSnippet))
+	mux.Get("/snippets", NoSurf(app.GetSnippets))
 
 	// Application Routes [User]
 	mux.Get("/user/signup", NoSurf(app.SignupUser))

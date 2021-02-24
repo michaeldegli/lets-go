@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -28,6 +29,25 @@ func (app *App) Home(w http.ResponseWriter, r *http.Request) {
 		Snippets: snippets,
 	})
 
+}
+
+func (app *App) GetSnippets(w http.ResponseWriter, r *http.Request) {
+
+	snippets, err := app.Database.FindSnippets()
+
+	if err != nil {
+		app.ServerError(w, err)
+		return
+	}
+
+	if snippets == nil {
+		app.NotFound(w)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(snippets)
 }
 
 // ShowSnippet ...
